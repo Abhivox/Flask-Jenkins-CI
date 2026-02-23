@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git ''https://github.com/Abhivox/Flask-Jenkins-CI.git'
+                git 'https://github.com/Abhivox/Flask-Jenkins-CI.git'
             }
         }
 
