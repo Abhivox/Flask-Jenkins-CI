@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Abhivox/Flask-Jenkins-CI.git'
-            }
-        }
-
         stage('Create Virtual Env') {
             steps {
                 bat 'python -m venv venv'
@@ -23,7 +17,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'venv\\Scripts\\pytest'
+                bat 'venv\\Scripts\\python test.py'
             }
         }
     }
