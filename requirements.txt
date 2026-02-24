@@ -1,8 +1,2 @@
-<<<<<<< HEAD
 flask
 pytest
-=======
-flask
-pytest
-
->>>>>>> dfbcf93 (Dockerfile added)
