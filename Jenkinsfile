@@ -22,12 +22,11 @@ pipeline {
         }
 
         stage('Smoke Test') {
-            steps {
-                bat 'timeout /t 5'
-                bat 'curl http://localhost:5000'
-            }
-        }
-
+    steps {
+        powershell 'Start-Sleep -Seconds 5'
+        bat 'curl http://localhost:5000'
+    }
+}
         stage('Cleanup') {
             steps {
                 bat 'docker stop flask-test || exit 0'
