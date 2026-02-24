@@ -3,23 +3,36 @@ pipeline {
 
     stages {
 
-        stage('Create Virtual Env') {
+        stage('Build Docker Image') {
             steps {
-                bat 'python -m venv venv'
+                bat 'docker build -t flask-app .'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Run Tests Inside Docker') {
             steps {
-                bat 'venv\\Scripts\\pip install -r requirements.txt'
+                bat 'docker run --rm flask-app pytest'
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Container') {
             steps {
-                bat 'venv\\Scripts\\python test_app.py'
+                bat 'docker run -d -p 5000:5000 --name flask-test flask-app'
             }
         }
 
+        stage('Smoke Test') {
+            steps {
+                bat 'timeout /t 5'
+                bat 'curl http://localhost:5000'
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                bat 'docker stop flask-test || exit 0'
+                bat 'docker rm flask-test || exit 0'
+            }
+        }
     }
 }
